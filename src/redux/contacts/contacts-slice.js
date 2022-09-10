@@ -14,10 +14,11 @@ const contactsSlice = createSlice({
       state.items = action.payload;
     },
     [contactsOperations.addContacts.fulfilled](state, action) {
-      state.items = [...state.items, action.payload];
+      console.log(action.payload);
+      state.items = action.payload;
     },
     [contactsOperations.deleteContacts.fulfilled](state, action) {
-      state.items = state.items.filter(elem => elem.id !== action.payload);
+      state.items = action.payload;
     },
   },
   reducers: {

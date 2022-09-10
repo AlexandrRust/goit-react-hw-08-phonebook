@@ -8,18 +8,30 @@ export const getContacts = createAsyncThunk('/contacts', async () => {
     const { data } = await axios.get('/contacts');
     return data;
   } catch (error) {
-    toast.info("There is no such user's collection!");
+    if (error.response.status === 404) {
+      toast.info("There is no such user's collection!");
+    } else if (error.response.status === 500) {
+      toast.error('Oops! Server error! Please try later!');
+    } else {
+      toast.error('Something went wrong! Please reload the page!');
+    }
   }
 });
 
 export const addContacts = createAsyncThunk(
   'contacts/add',
   async credentials => {
+    console.log(credentials);
     try {
-      const { data } = await axios.post('/contacts', credentials);
+      await axios.post('/contacts', credentials);
+      const { data } = await axios.get('/contacts');
       return data;
     } catch (error) {
-      toast.error('Contact creation error!');
+      if (error.response.status === 400) {
+        toast.error('Contact creation error!');
+      } else {
+        toast.error('Something went wrong! Please reload the page!');
+      }
     }
   }
 );
@@ -30,9 +42,18 @@ export const deleteContacts = createAsyncThunk(
     const contactId = credentials;
     try {
       await axios.delete(`/contacts/${contactId}`, credentials);
-      return contactId;
+      const { data } = await axios.get('/contacts');
+      return data;
     } catch (error) {
-      toast.info("There is no such user's collection!");
+      if (error.response.status === 404) {
+        toast.info("There is no such user's collection!");
+        const { data } = await axios.get('/contacts');
+        return data;
+      } else if (error.response.status === 500) {
+        toast.error('Oops! Server error! Please try later!');
+      } else {
+        toast.error('Something went wrong! Please reload the page!');
+      }
     }
   }
 );

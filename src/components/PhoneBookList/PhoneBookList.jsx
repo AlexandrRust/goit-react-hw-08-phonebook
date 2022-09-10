@@ -21,7 +21,7 @@ export const PhoneBookList = () => {
     <BookList>
       <tbody>
         {getVisibleContacts().map(({ name, id, number }) => (
-          <tr>
+          <tr key={id}>
             <BookListItem>{name}</BookListItem>
             <BookListItem>{number}</BookListItem>
             <BookListItem>

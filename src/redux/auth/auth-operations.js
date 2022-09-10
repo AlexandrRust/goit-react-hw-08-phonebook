@@ -21,7 +21,13 @@ export const register = createAsyncThunk('auth/register', async credentials => {
     return data;
   } catch (error) {
     if (error) {
-      toast.error('User creation error! Please try again!');
+      if (error.response.status === 400) {
+        toast.error('User creation error! Please try again!');
+      } else if (error.response.status === 500) {
+        toast.error('Oops! Server error! Please try later!');
+      } else {
+        toast.error('Something went wrong!');
+      }
     }
   }
 });
@@ -41,7 +47,11 @@ export const logOut = createAsyncThunk('auth/logout', async credentials => {
     await axios.post('/users/logout', credentials);
     token.unset();
   } catch (error) {
-    toast.error('Oops! Server error! Please try later!');
+    if (error.response.status === 500) {
+      toast.error('Oops! Server error! Please try later!');
+    } else {
+      toast.error('Something went wrong! Please reload the page!');
+    }
   }
 });
 

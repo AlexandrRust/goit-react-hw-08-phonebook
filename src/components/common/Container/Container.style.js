@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 1000px;
   min-height: 90vh;
-  padding: 20px;
+  padding: 50px;
   position: absolute;
   top: 20px;
   left: 50%;

@@ -1,12 +1,12 @@
 import { Box } from 'components/common/Box/Box.styled';
 import { Filter } from 'components/Filter/Filter';
-import { PhoneBookForm } from 'components/PhoneBookForm/PhoneBookForm';
+import { ContactsForm } from 'components/ContactsForm/ContactsForm';
 import { PhoneBookList } from 'components/PhoneBookList/PhoneBookList';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
-const PhoneBook = () => {
+const Contacts = () => {
   const dispatch = useDispatch(contactsOperations.getContacts);
   const contacts = useSelector(contactsSelectors.getContacts);
   useEffect(() => {
@@ -15,7 +15,7 @@ const PhoneBook = () => {
   return (
     <>
       <Box>
-        <PhoneBookForm />
+        <ContactsForm />
       </Box>
       <Box>
         <Filter />
@@ -29,4 +29,4 @@ const PhoneBook = () => {
   );
 };
 
-export default PhoneBook;
+export default Contacts;
