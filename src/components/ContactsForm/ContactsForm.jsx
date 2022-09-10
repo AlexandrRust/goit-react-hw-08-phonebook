@@ -49,12 +49,11 @@ export const ContactsForm = () => {
             country={'ua'}
             onChange={number => setNumber({ number })}
             inputStyle={{
-              marginTop: '15px',
               borderColor: 'gray',
               borderRadius: '5px',
               fontSize: '24px',
               fontWeight: 'bold',
-              width: '328px',
+              width: '314px',
             }}
           />
         </Label>
