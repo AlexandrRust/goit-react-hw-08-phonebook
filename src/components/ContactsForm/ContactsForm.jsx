@@ -1,14 +1,12 @@
 import { Formik, ErrorMessage } from 'formik';
-import { PhoneForm } from './PhoneForm.styled';
+import { ContatcsForm } from './ContatcsForm.styled';
 import { Label } from 'components/common/Label/Label.styled';
 import { FirstButton } from 'components/common/buttons/FirstButton.styled';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux/es/exports';
 import { contactsOperations } from 'redux/contacts';
 import { FormikInput } from 'components/common/Input/Input.styled';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/semantic-ui.css';
-import { useState } from 'react';
+import { PhoneInputField } from './common/PhoneInputField';
 
 const nameValid = "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
 const schema = yup.object().shape({
@@ -24,10 +22,9 @@ const schema = yup.object().shape({
 
 export const ContactsForm = () => {
   const dispatch = useDispatch();
-  const [number, setNumber] = useState();
   const handleSubmit = (values, { resetForm }) => {
-    const { name } = values;
-    dispatch(contactsOperations.addContacts({ name, ...number }));
+    const { name, number } = values;
+    dispatch(contactsOperations.addContacts({ name, number }));
     resetForm();
   };
   return (
@@ -36,7 +33,7 @@ export const ContactsForm = () => {
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
-      <PhoneForm autoComplete="off">
+      <ContatcsForm autoComplete="off">
         <Label htmlFor="name">
           Name
           <FormikInput type="text" name="name" />
@@ -44,21 +41,10 @@ export const ContactsForm = () => {
         </Label>
         <Label htmlFor="name">
           Phone
-          {/* <FormikInput type="tel" name="number" country={'us'} /> */}
-          <PhoneInput
-            country={'ua'}
-            onChange={number => setNumber({ number })}
-            inputStyle={{
-              borderColor: 'gray',
-              borderRadius: '5px',
-              fontSize: '24px',
-              fontWeight: 'bold',
-              width: '314px',
-            }}
-          />
+          <FormikInput type="tel" name="number" component={PhoneInputField} />
         </Label>
         <FirstButton type="submit">Add Contact</FirstButton>
-      </PhoneForm>
+      </ContatcsForm>
     </Formik>
   );
 };

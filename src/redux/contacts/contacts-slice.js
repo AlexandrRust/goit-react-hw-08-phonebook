@@ -14,7 +14,6 @@ const contactsSlice = createSlice({
       state.items = action.payload;
     },
     [contactsOperations.addContacts.fulfilled](state, action) {
-      console.log(action.payload);
       state.items = action.payload;
     },
     [contactsOperations.deleteContacts.fulfilled](state, action) {

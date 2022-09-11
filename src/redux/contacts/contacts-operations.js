@@ -21,7 +21,6 @@ export const getContacts = createAsyncThunk('/contacts', async () => {
 export const addContacts = createAsyncThunk(
   'contacts/add',
   async credentials => {
-    console.log(credentials);
     try {
       await axios.post('/contacts', credentials);
       const { data } = await axios.get('/contacts');

@@ -1,10 +1,10 @@
-import { AuthNav } from 'components/AuthNav/AuthNav';
+import { AuthNav } from 'layout/common/AuthNav/AuthNav';
 import { Header } from 'components/common/Header/Header.styled';
 import { HeaderLink } from 'components/common/NavLink/HeaderLink.styled';
-import { UserMenu } from 'components/UserMenu/UserMenu';
+import { UserMenu } from 'layout/common/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
 import { authSelectors } from 'redux/auth';
-import { NavList } from './Nav/NavList.styled';
+import { NavList } from './common/Nav/NavList.styled';
 
 export const AppBar = () => {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);

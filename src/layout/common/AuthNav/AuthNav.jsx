@@ -1,4 +1,4 @@
-import { NavList } from 'components/AppBar/Nav/NavList.styled';
+import { NavList } from 'layout/common/AppBar/common/Nav/NavList.styled';
 import { HeaderLink } from 'components/common/NavLink/HeaderLink.styled';
 
 export const AuthNav = () => {
