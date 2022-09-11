@@ -1,22 +1,17 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
-
-export const token = {
-  set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = '';
-  },
-};
+import { token } from 'api/api';
+import {
+  authCurrentUser,
+  authLogIn,
+  authLogOut,
+  authRegister,
+} from 'api/authApi';
 
 export const register = createAsyncThunk('auth/register', async credentials => {
   try {
-    const { data } = await axios.post('/users/signup', credentials);
+    const { data } = await authRegister(credentials);
     token.set(data.token);
     return data;
   } catch (error) {
@@ -34,7 +29,7 @@ export const register = createAsyncThunk('auth/register', async credentials => {
 
 export const logIn = createAsyncThunk('auth/login', async credentials => {
   try {
-    const { data } = await axios.post('/users/login', credentials);
+    const { data } = await authLogIn(credentials);
     token.set(data.token);
     return data;
   } catch (error) {
@@ -44,7 +39,7 @@ export const logIn = createAsyncThunk('auth/login', async credentials => {
 
 export const logOut = createAsyncThunk('auth/logout', async credentials => {
   try {
-    await axios.post('/users/logout', credentials);
+    await authLogOut(credentials);
     token.unset();
   } catch (error) {
     if (error.response.status === 500) {
@@ -67,7 +62,7 @@ export const getCurrentUser = createAsyncThunk(
     token.set(persistedToken);
 
     try {
-      const { data } = await axios.get('/users/current');
+      const { data } = await authCurrentUser();
       return data;
     } catch (error) {
       toast.warn('Authorization timed out! Please authenticate again!');

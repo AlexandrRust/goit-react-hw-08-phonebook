@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { contactsAdd, contactsDelete, contactsGet } from 'api/contactsApi';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const getContacts = createAsyncThunk('/contacts', async () => {
   try {
-    const { data } = await axios.get('/contacts');
+    const { data } = await contactsGet();
     return data;
   } catch (error) {
     if (error.response.status === 404) {
@@ -22,8 +23,8 @@ export const addContacts = createAsyncThunk(
   'contacts/add',
   async credentials => {
     try {
-      await axios.post('/contacts', credentials);
-      const { data } = await axios.get('/contacts');
+      await contactsAdd(credentials);
+      const { data } = await contactsGet();
       return data;
     } catch (error) {
       if (error.response.status === 400) {
@@ -40,8 +41,8 @@ export const deleteContacts = createAsyncThunk(
   async credentials => {
     const contactId = credentials;
     try {
-      await axios.delete(`/contacts/${contactId}`, credentials);
-      const { data } = await axios.get('/contacts');
+      await contactsDelete(contactId, credentials);
+      const { data } = await contactsGet();
       return data;
     } catch (error) {
       if (error.response.status === 404) {
